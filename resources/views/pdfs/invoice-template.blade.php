@@ -346,7 +346,7 @@
             <p>Date: {{ date('F j, Y') }} | Event Tpe : {{ $client['particular_function']['name'] ?? 'N/A' }}</p>
         </div>
 
-        <div class="invoice-info">
+        <!-- <div class="invoice-info">
             <div class="invoice-section">
                 <div class="section-title">BILL FROM</div>
                 <div class="info-card">
@@ -364,6 +364,40 @@
                     <p><strong>Visit Our Website:</strong> {{ $client['user_details']['website_link'] ?? 'N/A' }}</p>
                     <p><strong>Email:</strong> {{ $client['user_details']['email'] ?? 'N/A' }}</p>
                     <p><strong>Address:</strong> {{ $client['user_details']['address'] ?? 'N/A' }}</p>
+                </div>
+            </div> -->
+            <div class="invoice-info">
+                <div class="invoice-section">
+                    <div class="section-title">BILL FROM</div>
+                    <div class="info-card">
+                        <div class="studio-header">
+                            @if(!empty($client['user_details']['image']) && file_exists(public_path('images/user/' . $client['user_details']['image'])))
+                                <img src="{{ public_path('images/user/' . $client['user_details']['image']) }}" class="studio-logo" alt="Studio Logo">
+                            @endif
+                            <h3 class="studio-name">{{ $client['user_details']['studio_name'] ?? $client['user_details']['name'] ?? 'N/A' }}</h3>
+                        </div>
+                        <p><strong>Name:</strong> {{ $client['user_details']['name'] ?? 'N/A' }}</p>
+                        <p><strong>Phone:</strong> {{ $client['user_details']['phone_number'] ?? 'N/A' }}</p>
+
+                        @if(!empty($client['user_details']['instagram_link']))
+                            <p><strong>Visit Instagram Profile:</strong> {{ $client['user_details']['instagram_link'] }}</p>
+                        @endif
+
+                        @if(!empty($client['user_details']['facebook_link']))
+                            <p><strong>Visit Facebook Profile:</strong> {{ $client['user_details']['facebook_link'] }}</p>
+                        @endif
+
+                        @if(!empty($client['user_details']['youtube_link']))
+                            <p><strong>Visit Youtube Channel:</strong> {{ $client['user_details']['youtube_link'] }}</p>
+                        @endif
+
+                        @if(!empty($client['user_details']['website_link']))
+                            <p><strong>Visit Our Website:</strong> {{ $client['user_details']['website_link'] }}</p>
+                        @endif
+
+                        <p><strong>Email:</strong> {{ $client['user_details']['email'] ?? 'N/A' }}</p>
+                        <p><strong>Address:</strong> {{ $client['user_details']['address'] ?? 'N/A' }}</p>
+                    </div>
                 </div>
             </div>
 

@@ -48,6 +48,7 @@ class UserController extends BaseController
                 'address' => 'required|string',
                 'email' => 'required|max:100',
                 'password' => 'required|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|max:20',
+                'c_password' => 'required|same:password',
                 'subscription_date' => 'nullable|max:10',
                 'instagram_link' => 'nullable',
                 'facebook_link' => 'nullable',
@@ -57,7 +58,7 @@ class UserController extends BaseController
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
             }
-            $updateData = (['name' => $input['name'], 'phone_number' => $input['phone_number'], 'studio_name' => $input['studio_name'], 'address' => $input['address'], 'email' => $input['email'], 'password' => bcrypt($input['password']), 'subscription_date' => $input['subscription_date'], 'instagram_link' => $input['instagram_link'] ?? '', 'facebook_link' => $input['facebook_link'] ?? '', 'youtube_link' => $input['youtube_link'] ?? '', 'website_link' => $input['website_link'] ?? '', 'status' => $input['website_link']]);
+            $updateData = (['name' => $input['name'], 'phone_number' => $input['phone_number'], 'studio_name' => $input['studio_name'], 'address' => $input['address'], 'email' => $input['email'], 'password' => bcrypt($input['password']), 'subscription_date' => $input['subscription_date'], 'instagram_link' => $input['instagram_link'] ?? '', 'facebook_link' => $input['facebook_link'] ?? '', 'youtube_link' => $input['youtube_link'] ?? '', 'website_link' => $input['website_link'] ?? '', 'status' => '1']);
             if ($request->file('image')) {
                 $file = $request->file('image');
                 $filename = time() . $file->getClientOriginalName();
@@ -84,6 +85,7 @@ class UserController extends BaseController
                 'address' => 'required|string',
                 'email' => 'required|max:100',
                 'password' => 'required|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|max:20',
+                'c_password' => 'required|same:password',
                 'subscription_date' => 'nullable|max:10',
                 'instagram_link' => 'nullable',
                 'facebook_link' => 'nullable',

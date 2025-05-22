@@ -77,7 +77,7 @@ class AuthController extends BaseController
         }
     }
 
-    public function profile_update(Request $request)
+    /* public function profile_update(Request $request)
     {
         try {
             $user = auth()->user();
@@ -102,6 +102,46 @@ class AuthController extends BaseController
             return $this->sendResponse([], 'Profile updated successfully.');
         } catch (Exception $e) {
             return $this->sendError('something went wrong!', $e);
+        }
+    } */
+
+    public function profile_update(Request $request)
+    {
+        try {
+            $user = auth()->user();
+
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|min:3',
+                'instagram_link' => 'nullable|string',
+                'facebook_link' => 'nullable|string',
+                'youtube_link' => 'nullable|string',
+                'website_link' => 'nullable|string',
+                'password' => 'nullable|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|max:20',
+            ]);
+
+            if ($validator->fails()) {
+                return $this->sendError('Validation Error.', $validator->errors());
+            }
+
+            $input = $request->except(['password']);
+
+            // Convert empty strings to null for optional social links
+            $nullableFields = ['instagram_link', 'facebook_link', 'youtube_link', 'website_link'];
+            foreach ($nullableFields as $field) {
+                if (isset($input[$field]) && $input[$field] === '') {
+                    $input[$field] = null;
+                }
+            }
+
+            if ($request->filled('password')) {
+                $input['password'] = bcrypt($request->password);
+            }
+
+            User::where('id', $user->id)->update($input);
+
+            return $this->sendResponse([], 'Profile updated successfully.');
+        } catch (Exception $e) {
+            return $this->sendError('Something went wrong!', $e);
         }
     }
 }

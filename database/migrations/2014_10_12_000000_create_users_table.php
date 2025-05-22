@@ -23,10 +23,10 @@ return new class extends Migration
             $table->smallInteger('role')->default(2)->comment('1 for Super Admin 2 for Admin');
             $table->boolean('status')->default(0)->comment("1 for active and 0 for in-active");
             $table->string('subscription_date');
-            $table->string('instagram_link')->nullabe();
-            $table->string('facebook_link')->nullabe();
-            $table->string('youtube_link')->nullabe();
-            $table->string('website_link')->nullabe();
+            $table->string('instagram_link')->nullabe()->change();
+            $table->string('facebook_link')->nullabe()->change();
+            $table->string('youtube_link')->nullabe()->change();
+            $table->string('website_link')->nullabe()->change();
             $table->rememberToken();
             $table->timestamps();
         });

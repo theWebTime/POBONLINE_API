@@ -245,14 +245,18 @@
                 <strong>GRAND TOTAL</strong>
                 {{ $grand_total }}
             </div>
+            @if(!empty($discount_percentage))
             <div class="amount-item">
                 <strong>DISCOUNT PERCENTAGE</strong>
                 {{ $discount_percentage }}%
             </div>
+            @endif
+            @if(!empty($discount_amount))
             <div class="amount-item">
                 <strong>DISCOUNT AMOUNT</strong>
                 {{ $discount_amount }}
             </div>
+            @endif
             <div class="final-total-container">
                 <strong>FINAL TOTAL</strong>
                 <span class="final-total">{{ $final_total }}</span>
