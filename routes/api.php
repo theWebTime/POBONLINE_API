@@ -153,6 +153,7 @@ Route::group(['middleware' => ['auth:api', 'checkRole:admin']],  function () {
     Route::group(['prefix' => '/your-story'], function () {
         Route::get('/show', [YourStoryController::class, 'show']);
         Route::post('/update', [YourStoryController::class, 'updateOrCreate']);
+        Route::post('/delete', [YourStoryController::class, 'deleteImage']);
     });
 
     // Privacy Policy Routes

@@ -30,6 +30,7 @@ class User extends Authenticatable
         'role',
         'status',
         'subscription_date',
+        'subscription_end_date',
         'instagram_link',
         'facebook_link',
         'youtube_link',

@@ -52,4 +52,34 @@ class YourStoryController extends BaseController
             return $this->sendError('something went wrong!', $e);
         }
     }
+
+    public function deleteImage(Request $request)
+    {
+        try {
+            $userId = auth()->id();
+            $column = $request->column;
+
+            if (!in_array($column, ['image', 'image2'])) {
+                return $this->sendError('Invalid image column.');
+            }
+
+            $story = YourStory::where('user_id', $userId)->first();
+
+            if (!$story || !$story->$column) {
+                return $this->sendError('Image not found.');
+            }
+
+            $filePath = public_path('images/yourStory/' . $story->$column);
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            $story->$column = null;
+            $story->save();
+
+            return $this->sendResponse([], 'Image deleted successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError('Something went wrong!', $e);
+        }
+    }
 }

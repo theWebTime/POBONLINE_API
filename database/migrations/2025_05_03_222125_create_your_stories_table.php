@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('your_stories', function (Blueprint $table) {
             $table->id();
-            $table->string('image');
-            $table->string('image2');
+            $table->string('image')->nullable();
+            $table->string('image2')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();

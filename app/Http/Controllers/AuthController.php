@@ -129,7 +129,7 @@ class AuthController extends BaseController
             $nullableFields = ['instagram_link', 'facebook_link', 'youtube_link', 'website_link'];
             foreach ($nullableFields as $field) {
                 if (isset($input[$field]) && $input[$field] === '') {
-                    $input[$field] = null;
+                    $input[$field] = '';
                 }
             }
 
