@@ -33,7 +33,7 @@ class AuthController extends BaseController
 
     public function login(Request $request): JsonResponse
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+        if(Auth::attempt(['phone_number' => $request->phone_number, 'password' => $request->password])){ 
             $user = Auth::user(); 
              if ($user->status == 0) {
                 return $this->sendError('Unauthorized.');

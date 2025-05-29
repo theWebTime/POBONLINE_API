@@ -12,7 +12,7 @@ class AdminSeeder extends Seeder
     {
         User::create([
             'name' => 'Quotation Hub',
-            'phone_number' => '7862813861',
+            'phone_number' => '9876598765',
             'studio_name' => 'Quotation Hub',
             'image' => 'null',
             'address' => 'Aarem Square, Iskcon',
