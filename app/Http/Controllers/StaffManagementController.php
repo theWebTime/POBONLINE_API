@@ -62,8 +62,8 @@ class StaffManagementController extends BaseController
             $input = $request->all();
             $validator = Validator::make($input, [
                 'name' => 'required|max:70',
-                'phone_number' => 'required|max:15',
-                'email' => 'nullable|max:100',
+                'phone_number' => 'required|max:15|unique:staff_management,phone_number',
+                'email' => 'nullable|max:100|unique:staff_management,email',
                 'category_role_id' => 'required'
             ]);
             if ($validator->fails()) {
@@ -95,8 +95,8 @@ class StaffManagementController extends BaseController
             $input = $request->all();
             $validator = Validator::make($input, [
                 'name' => 'required|max:70',
-                'phone_number' => 'required|max:15',
-                'email' => 'nullable|max:100',
+                'phone_number' => 'required|max:15|unique:staff_management,phone_number,' . $id,
+                'email' => 'nullable|max:100|unique:staff_management,email,' . $id,
                 'category_role_id' => 'required'
             ]);
             if ($validator->fails()) {
@@ -232,34 +232,34 @@ class StaffManagementController extends BaseController
     }
 
     public function downloadStaffPDF($staffId)
-{
-    try {
-        $staff = StaffManagement::findOrFail($staffId);
-        $assignedFunctions = OrganizeDepartment::where('staff_management_id', $staffId)
-                                                ->with('clientFunction', 'client')
-                                                ->get();
+    {
+        try {
+            $staff = StaffManagement::findOrFail($staffId);
+            $assignedFunctions = OrganizeDepartment::where('staff_management_id', $staffId)
+                                                    ->with('clientFunction', 'client')
+                                                    ->get();
 
-        $data = [
-            'staff_name' => $staff->name,
-            'staff_phone' => $staff->phone_number,
-            'assigned_functions' => $assignedFunctions,
-            'function_count' => $assignedFunctions->count(),
-        ];
+            $data = [
+                'staff_name' => $staff->name,
+                'staff_phone' => $staff->phone_number,
+                'assigned_functions' => $assignedFunctions,
+                'function_count' => $assignedFunctions->count(),
+            ];
 
-        $pdf = Pdf::loadView('pdfs.staff-details', $data);
+            $pdf = Pdf::loadView('pdfs.staff-details', $data);
 
-        // Return PDF with headers
-        return response($pdf->output(), 200)
-            ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="staff_details_' . $staffId . '.pdf"');
-        
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Error downloading PDF',
-            'error' => $e->getMessage(),
-        ], 500);
+            // Return PDF with headers
+            return response($pdf->output(), 200)
+                ->header('Content-Type', 'application/pdf')
+                ->header('Content-Disposition', 'attachment; filename="staff_details_' . $staffId . '.pdf"');
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error downloading PDF',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
-}
 
 }

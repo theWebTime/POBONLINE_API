@@ -139,10 +139,10 @@ class UserController extends BaseController
             $validator = Validator::make($input, [
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5120',
                 'name' => 'required|max:100',
-                'phone_number' => 'required|max:15',
+                'phone_number' => 'required|max:15|unique:users,phone_number,' . $id,
                 'studio_name' => 'required|max:100',
                 'address' => 'required|string',
-                'email' => 'required|max:100',
+                'email' => 'required|max:100|unique:users,email,' . $id,
                 'password' => 'nullable|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|max:20',
                 'status' => 'required|in:0,1',
                 'subscription_date' => 'required|max:10',

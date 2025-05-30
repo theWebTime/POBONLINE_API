@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('staff_management', function (Blueprint $table) {
             $table->id();
             $table->string('name', 70);
-            $table->string('phone_number', 15);
-            $table->string('email', 100);
+            $table->string('phone_number', 15)->unique();
+            $table->string('email', 100)->unique()->nullable();
             $table->unsignedBigInteger('category_role_id');
             $table->foreign('category_role_id')->references('id')->on('category_management');
             $table->unsignedBigInteger('user_id');
