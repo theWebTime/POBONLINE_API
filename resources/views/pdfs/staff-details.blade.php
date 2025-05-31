@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Staff Assignment Details</title>
+    <title>Team Assignment Details</title>
     <style>
         :root {
             --primary: #2c3e50; /* Darker primary color from invoice */
