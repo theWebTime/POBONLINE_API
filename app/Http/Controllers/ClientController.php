@@ -568,7 +568,7 @@ class ClientController extends BaseController
 
             return $this->sendResponse(
                 ['client' => $client->load(['complimentServices', 'clientFunctions.categories'])],
-                'Client updated successfully with all staff assignments'
+                'Client updated successfully with all Team assignments'
             );
 
         } catch (\Exception $e) {

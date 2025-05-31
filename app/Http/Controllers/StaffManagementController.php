@@ -21,7 +21,7 @@ class StaffManagementController extends BaseController
                     $query->where('name', 'like', '%' . $request->search . '%');
                 }
             })->orderBy('id', 'DESC')->paginate($request->itemsPerPage ?? 10);
-            return $this->sendResponse($data, 'Staff retrieved successfully.');
+            return $this->sendResponse($data, 'Team retrieved successfully.');
         } catch (Exception $e) {
             return $this->sendError('something went wrong!', $e);
         }
@@ -71,7 +71,7 @@ class StaffManagementController extends BaseController
             }
             $updateData = (['name' => $input['name'], 'phone_number' => $input['phone_number'], 'email' => $input['email'], 'user_id' => auth()->user()->id, 'category_role_id' => $input['category_role_id']]);
             StaffManagement::create($updateData);
-            return $this->sendResponse([], 'Staff created successfully.');
+            return $this->sendResponse([], 'Team created successfully.');
         } catch (Exception $e) {
             return $this->sendError('something went wrong!', $e);
         }
@@ -82,7 +82,7 @@ class StaffManagementController extends BaseController
         //Using Try & Catch For Error Handling
         try {
             $data = StaffManagement::join('category_management', 'category_management.id', '=', 'staff_management.category_role_id')->where('staff_management.id', $id)->select('staff_management.id', 'name', 'phone_number', 'email', 'category_role_id')->first();
-            return $this->sendResponse($data, 'Staff retrieved successfully.');
+            return $this->sendResponse($data, 'Team retrieved successfully.');
         } catch (Exception $e) {
             return $this->sendError('something went wrong!', $e);
         }
@@ -104,7 +104,7 @@ class StaffManagementController extends BaseController
             }
             $updateData = (['name' => $input['name'], 'phone_number' => $input['phone_number'], 'email' => $input['email'], 'user_id' => auth()->user()->id, 'category_role_id' => $input['category_role_id']]);
             StaffManagement::where('id', $id)->update($updateData);
-            return $this->sendResponse([], 'Staff updated successfully.');
+            return $this->sendResponse([], 'Team updated successfully.');
         } catch (Exception $e) {
             return $e;
             return $this->sendError('something went wrong!', $e);
@@ -116,7 +116,7 @@ class StaffManagementController extends BaseController
         //Using Try & Catch For Error Handling
         try {
             DB::table('staff_management')->where('id', $id)->delete();
-            return $this->sendResponse([], 'Staff deleted successfully.');
+            return $this->sendResponse([], 'Team deleted successfully.');
         } catch (Exception $e) {
             return $this->sendError('something went wrong!', $e);
         }
