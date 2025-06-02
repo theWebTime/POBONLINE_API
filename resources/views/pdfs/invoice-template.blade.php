@@ -322,19 +322,19 @@
 <body>
     {{-- Only show images if they exist --}}
     @php
-        $showImage1 = !empty($client['image']) && file_exists(public_path('images/yourStory/' . $client['image']));
-        $showImage2 = !empty($client['image2']) && file_exists(public_path('images/yourStory/' . $client['image2']));
+        $showImage1 = !empty($client['image']) && file_exists(public_path('quotation_hub/images/yourStory/' . $client['image']));
+        $showImage2 = !empty($client['image2']) && file_exists(public_path('quotation_hub/images/yourStory/' . $client['image2']));
     @endphp
 
     @if($showImage1)
         <div style="page-break-after: always; height: 100vh;">
-            <img src="{{ public_path('images/yourStory/' . $client['image']) }}" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="{{ public_path('quotation_hub/images/yourStory/' . $client['image']) }}" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
     @endif
 
     @if($showImage2)
         <div style="page-break-after: {{ $showImage1 ? 'always' : 'auto' }}; height: 100vh;">
-            <img src="{{ public_path('images/yourStory/' . $client['image2']) }}" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="{{ public_path('quotation_hub/images/yourStory/' . $client['image2']) }}" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
     @endif
 
@@ -351,8 +351,8 @@
                 <div class="section-title">BILL FROM</div>
                 <div class="info-card">
                     <div class="studio-header">
-                        @if(!empty($client['user_details']['image']) && file_exists(public_path('images/user/' . $client['user_details']['image'])))
-                            <img src="{{ public_path('images/user/' . $client['user_details']['image']) }}" class="studio-logo" alt="Studio Logo">
+                        @if(!empty($client['user_details']['image']) && file_exists(public_path('quotation_hub/images/user/' . $client['user_details']['image'])))
+                            <img src="{{ public_path('quotation_hub/images/user/' . $client['user_details']['image']) }}" class="studio-logo" alt="Studio Logo">
                         @endif
                         <h3 class="studio-name">{{ $client['user_details']['studio_name'] ?? $client['user_details']['name'] ?? 'N/A' }}</h3>
                     </div>
@@ -371,8 +371,8 @@
                     <div class="section-title">BILL FROM</div>
                     <div class="info-card">
                         <div class="studio-header">
-                            @if(!empty($client['user_details']['image']) && file_exists(public_path('images/user/' . $client['user_details']['image'])))
-                                <img src="{{ public_path('images/user/' . $client['user_details']['image']) }}" class="studio-logo" alt="Studio Logo">
+                            @if(!empty($client['user_details']['image']) && file_exists(public_path('quotation_hub/images/user/' . $client['user_details']['image'])))
+                                <img src="{{ public_path('quotation_hub/images/user/' . $client['user_details']['image']) }}" class="studio-logo" alt="Studio Logo">
                             @endif
                             <h3 class="studio-name">{{ $client['user_details']['studio_name'] ?? $client['user_details']['name'] ?? 'N/A' }}</h3>
                         </div>

@@ -150,7 +150,7 @@ class AuthController extends BaseController
             if ($request->file('image')) {
                 $file = $request->file('image');
                 $filename = time() . $file->getClientOriginalName();
-                $file->move(public_path('images/user'), $filename);
+                $file->move(public_path('quotation_hub/images/user'), $filename);
                 $updateData['image'] = $filename;
             }
 

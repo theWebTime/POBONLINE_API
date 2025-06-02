@@ -20,14 +20,14 @@ class YourStoryController extends BaseController
             if ($request->file('image')) {
                 $file = $request->file('image');
                 $filename = time() . $file->getClientOriginalName();
-                $file->move(public_path('images/yourStory'), $filename);
+                $file->move(public_path('quotation_hub/images/yourStory'), $filename);
                 $updateData['image'] = $filename;
             }
 
             if ($request->file('image2')) {
                 $file = $request->file('image2');
                 $filename = time() . $file->getClientOriginalName();
-                $file->move(public_path('images/yourStory'), $filename);
+                $file->move(public_path('quotation_hub/images/yourStory'), $filename);
                 $updateData['image2'] = $filename;
             }
 
@@ -69,7 +69,7 @@ class YourStoryController extends BaseController
                 return $this->sendError('Image not found.');
             }
 
-            $filePath = public_path('images/yourStory/' . $story->$column);
+            $filePath = public_path('quotation_hub/images/yourStory/' . $story->$column);
             if (file_exists($filePath)) {
                 unlink($filePath);
             }

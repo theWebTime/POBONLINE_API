@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/quotation_hub
 /storage/*.key
 /vendor
 .env

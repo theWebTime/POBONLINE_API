@@ -67,7 +67,7 @@ class UserController extends BaseController
             if ($request->file('image')) {
                 $file = $request->file('image');
                 $filename = time() . $file->getClientOriginalName();
-                $file->move(public_path('images/user'), $filename);
+                $file->move(public_path('quotation_hub/images/user'), $filename);
                 $updateData['image'] = $filename;
             }
             User::create($updateData);
@@ -109,7 +109,7 @@ class UserController extends BaseController
             if ($request->file('image')) {
                 $file = $request->file('image');
                 $filename = time() . $file->getClientOriginalName();
-                $file->move(public_path('images/user'), $filename);
+                $file->move(public_path('quotation_hub/images/user'), $filename);
                 $updateData['image'] = $filename;
             }
             User::create($updateData);
@@ -185,7 +185,7 @@ class UserController extends BaseController
             if ($request->file('image')) {
                 $file = $request->file('image');
                 $filename = time() . $file->getClientOriginalName();
-                $file->move(public_path('images/user'), $filename);
+                $file->move(public_path('quotation_hub/images/user'), $filename);
                 $updateData['image'] = $filename;
             }
 
@@ -204,7 +204,7 @@ class UserController extends BaseController
         //Using Try & Catch For Error Handling
         try {
             $data = DB::table('users')->where('id', $id)->first();
-            $path = public_path() . "/images/user/" . $data->image;
+            $path = public_path() . "/quotation_hub/images/user/" . $data->image;
             unlink($path);
             DB::table('users')->where('id', $id)->delete();
             return $this->sendResponse([], 'User deleted successfully.');

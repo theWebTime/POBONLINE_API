@@ -149,14 +149,14 @@
 </head>
 <body>
     <div class="header">
-        <h1>STAFF ASSIGNMENT DETAILS</h1>
+        <h1>TEAM ASSIGNMENT DETAILS</h1>
     </div>
 
     <div class="staff-info">
-        <h2 class="section-title">Staff Information</h2>
+        <h2 class="section-title">Team Information</h2>
         <div class="info-grid">
             <div class="info-item">
-                <span class="label">Staff Name:</span> {{ $staff_name }}
+                <span class="label">Team Member Name:</span> {{ $staff_name }}
             </div>
             <div class="info-item">
                 <span class="label">Phone Number:</span> {{ $staff_phone }}

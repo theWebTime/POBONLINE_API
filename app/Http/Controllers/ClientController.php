@@ -759,7 +759,7 @@ class ClientController extends BaseController
             $pdf = Pdf::loadView('pdfs.invoice-template', ['client' => $transformedClient]);
 
             // Now store it manually using public_path
-            $path = public_path('file/brochure');
+            $path = public_path('quotation_hub/file/brochure');
             if (!file_exists($path)) {
                 mkdir($path, 0777, true); // create folder if not exists
             }
@@ -769,7 +769,7 @@ class ClientController extends BaseController
 
             file_put_contents($fullPath, $pdf->output());
 
-            $url = asset('file/brochure/' . $filename);
+            $url = asset('quotation_hub/file/brochure/' . $filename);
 
             return response()->json([
                 'success' => true,
@@ -884,7 +884,7 @@ class ClientController extends BaseController
     {
         try {
             $filename = 'invoice_' . $clientId . '_' . time() . '.pdf';
-            $filePath = public_path('file/brochure/' . $filename);
+            $filePath = public_path('quotation_hub/file/brochure/' . $filename);
             
             // Generate the PDF if it doesn't exist
             if (!file_exists($filePath)) {
@@ -937,7 +937,7 @@ class ClientController extends BaseController
 
             // For WhatsApp sharing: save to disk and return URL
             $filename = 'receipt_' . $clientId . '_' . time() . '.pdf';
-            $path = public_path('receipts');
+            $path = public_path('quotation_hub/receipts');
             
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
@@ -947,7 +947,7 @@ class ClientController extends BaseController
 
             return response()->json([
                 'success' => true,
-                'url' => url('receipts/' . $filename),
+                'url' => url('quotation_hub/receipts/' . $filename),
             ]);
 
         } catch (\Exception $e) {
@@ -1041,7 +1041,7 @@ class ClientController extends BaseController
         $filename = 'receipt_' . $clientId . '.pdf';
 
         // Save the PDF to the 'public/receipts' folder
-        $pdf->save(public_path('receipts/' . $filename));
+        $pdf->save(public_path('quotation_hub/receipts/' . $filename));
 
         // Return the URL of the generated PDF
         return response()->json([
@@ -1054,7 +1054,7 @@ class ClientController extends BaseController
     {
         try {
             $filename = 'receipt_' . $clientId . '.pdf';
-            $filePath = public_path('receipts/' . $filename);
+            $filePath = public_path('quotation_hub/receipts/' . $filename);
             
             // Generate the PDF if it doesn't exist
             if (!file_exists($filePath)) {

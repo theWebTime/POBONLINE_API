@@ -9,6 +9,7 @@ use App\Models\OrganizeDepartment;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BaseController as BaseController;
 
 class StaffManagementController extends BaseController
@@ -137,7 +138,7 @@ class StaffManagementController extends BaseController
                     'client_functions.function_name',
                     'client_functions.function_time',
                     'client_functions.venue'
-                );
+                )->where('organize_departments.user_id', auth()->id());
 
             // Search
             if ($request->filled('search')) {
@@ -211,15 +212,19 @@ class StaffManagementController extends BaseController
             $pdf = Pdf::loadView('pdfs.staff-details', $data);
 
             // Define the filename
-            $filename = 'staff_details_' . $staffId . '.pdf';
+            $filename = 'staff_details_' . $staffId . '_' . time() . '.pdf';
+            $path = public_path('quotation_hub/staff-pdfs');
 
-            // Save the PDF to the 'public/staff-pdfs' folder
-            $pdf->save(public_path('staff-pdfs/' . $filename));
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+
+            $pdf->save($path . '/' . $filename);
 
             // Return the URL of the generated PDF
             return response()->json([
                 'success' => true,
-                'url' => url('staff-pdfs/' . $filename),
+                'url' => url('quotation_hub/staff-pdfs/' . $filename),
                 'phone_number' => $staff->phone_number
             ]);
         } catch (\Exception $e) {
