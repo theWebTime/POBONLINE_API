@@ -70,7 +70,7 @@ class AuthController extends BaseController
             if (is_null($auth)) {
                 return $this->sendError('Profile not found.');
             }
-            $user = User::where('id', $auth->id)->select('id', 'name', 'email', 'image', 'instagram_link', 'facebook_link', 'youtube_link', 'website_link', 'studio_name')->first();
+            $user = User::where('id', $auth->id)->select('id', 'name', 'address', 'phone_number', 'email', 'image', 'instagram_link', 'facebook_link', 'youtube_link', 'website_link', 'studio_name')->first();
             return $this->sendResponse($user, 'Profile retrieved successfully.');
         } catch (Exception $e) {
             return $this->sendError('something went wrong!', $e);
@@ -108,36 +108,54 @@ class AuthController extends BaseController
     public function profile_update(Request $request)
     {
         try {
+            $input = $request->all();
+
             $user = auth()->user();
 
             $validator = Validator::make($request->all(), [
                 'name' => 'required|min:3',
+                'address' => 'required|string',
                 'instagram_link' => 'nullable|string',
                 'facebook_link' => 'nullable|string',
                 'youtube_link' => 'nullable|string',
                 'website_link' => 'nullable|string',
                 'password' => 'nullable|min:6|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/|max:20',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,svg|max:5120',
             ]);
 
             if ($validator->fails()) {
                 return $this->sendError('Validation Error.', $validator->errors());
             }
 
-            $input = $request->except(['password']);
+            // Get existing user
+            // $user = User::findOrFail($id);
 
-            // Convert empty strings to null for optional social links
-            $nullableFields = ['instagram_link', 'facebook_link', 'youtube_link', 'website_link'];
-            foreach ($nullableFields as $field) {
-                if (isset($input[$field]) && $input[$field] === '') {
-                    $input[$field] = '';
-                }
-            }
+            // Prepare update data
+            $updateData = [
+                'name' => $input['name'],
+                'studio_name' => $input['studio_name'],
+                'address' => $input['address'],
+                'instagram_link' => $input['instagram_link'] ?? '',
+                'facebook_link' => $input['facebook_link'] ?? '',
+                'youtube_link' => $input['youtube_link'] ?? '',
+                'website_link' => $input['website_link'] ?? '',
+            ];
 
+            // Only update password if filled
             if ($request->filled('password')) {
-                $input['password'] = bcrypt($request->password);
+                $updateData['password'] = bcrypt($request->password);
             }
 
-            User::where('id', $user->id)->update($input);
+            // Handle image upload if provided
+            if ($request->file('image')) {
+                $file = $request->file('image');
+                $filename = time() . $file->getClientOriginalName();
+                $file->move(public_path('images/user'), $filename);
+                $updateData['image'] = $filename;
+            }
+
+            // Update user
+            User::where('id', $user->id)->update($updateData);
 
             return $this->sendResponse([], 'Profile updated successfully.');
         } catch (Exception $e) {
