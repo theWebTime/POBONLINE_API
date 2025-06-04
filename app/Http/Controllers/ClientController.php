@@ -688,9 +688,9 @@ class ClientController extends BaseController
                 'yourStory:id,user_id,image,image2',
             ])->findOrFail($clientId);
 
-            $privacyPolicy = PrivacyPolicy::latest()->first(); // or use user_id if needed
-            $externalServices = ExternalService::all();
             $user = Auth::user();
+            $privacyPolicy = PrivacyPolicy::latest()->first(); // or use user_id if needed
+            $externalServices = ExternalService::where('user_id', $user->id)->get();
             // Prepare transformed data exactly like you do in index()
             $transformedClient = [
                 'id' => $client->id,
@@ -798,9 +798,9 @@ class ClientController extends BaseController
                 'yourStory:id,user_id,image,image2',
             ])->findOrFail($clientId);
 
-            $privacyPolicy = PrivacyPolicy::latest()->first();
-            $externalServices = ExternalService::all();
             $user = Auth::user();
+            $privacyPolicy = PrivacyPolicy::latest()->first();
+            $externalServices = ExternalService::where('user_id', $user->id)->get();
             
             // Your existing transformation logic
             $transformedClient = [
