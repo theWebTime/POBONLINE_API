@@ -689,7 +689,7 @@ class ClientController extends BaseController
             ])->findOrFail($clientId);
 
             $user = Auth::user();   
-            $privacyPolicy = PrivacyPolicy::where('user_id', $user->id)->get(); // or use user_id if needed
+            $privacyPolicy = PrivacyPolicy::where('user_id', $user->id)->latest()->first();
             $externalServices = ExternalService::where('user_id', $user->id)->get();
             // Prepare transformed data exactly like you do in index()
             $transformedClient = [
@@ -799,7 +799,7 @@ class ClientController extends BaseController
             ])->findOrFail($clientId);
 
             $user = Auth::user();
-            $privacyPolicy = PrivacyPolicy::where('user_id', $user->id)->get();
+           $privacyPolicy = PrivacyPolicy::where('user_id', $user->id)->latest()->first();
             $externalServices = ExternalService::where('user_id', $user->id)->get();
             
             // Your existing transformation logic

@@ -10,8 +10,8 @@ class PrivacyPolicy extends Model
     use HasFactory;
     protected $fillable = ['id', 'privacy_policy', 'user_id'];
 
-    public function client()
+    public function user()
     {
-        return $this->belongsTo(Client::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 }
