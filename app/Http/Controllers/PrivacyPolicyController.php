@@ -15,7 +15,7 @@ class PrivacyPolicyController extends BaseController
     {
         try {
             $input = $request->all();
-            $updateData = ['privacy_policy' => $input['privacy_policy'], 'user_id' => auth()->user()->id];
+            $updateData = ['privacy_policy' => $input['privacy_policy'] ?? '', 'user_id' => auth()->user()->id];
 
             PrivacyPolicy::updateOrInsert($updateData);
 
