@@ -61,6 +61,8 @@ Route::group(['middleware' => ['auth:api', 'checkRole:admin']],  function () {
     Route::get('/compliment-service-index', [ListController::class, 'complimentServiceList']);
     //Route::get('/staff-by-category/{categoryId}', [ListController::class, 'getStaffByCategory']);
     Route::get('/available-staff/{categoryId}/{clientFunctionId}', [ListController::class, 'getAvailableStaff']);
+    // Booked Clients List
+    Route::get('/booked-client-index', [ListController::class, 'bookedClient']);
 
 
     // Category Management Routes

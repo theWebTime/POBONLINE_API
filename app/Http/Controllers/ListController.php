@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Client;
 use App\Models\CategoryManagement;
 use App\Models\StaffManagement;
 use App\Models\ParticularFunction;
@@ -259,5 +260,31 @@ class ListController extends BaseController
             'success' => false,
             'message' => 'Unauthorized role'
         ], 403);
+    }
+
+    public function bookedClient(Request $request)
+    {
+        try {
+            $data = Client::where('clients.is_booked', 1)
+                ->where('clients.user_id', auth()->id()) // Explicit table name to avoid ambiguity
+                ->join('particular_functions', 'particular_functions.id', '=', 'clients.particular_function_id')
+                ->select(
+                    'clients.id',
+                    'clients.name as client_name',
+                    'clients.phone_number',
+                    'clients.starting_date',
+                    'particular_functions.name as function_name'
+                )->when($request->search, function ($query, $search) {
+                    $query->where(function ($q) use ($search) {
+                        $q->where('particular_functions.name', 'like', '%' . $search . '%');
+                    });
+                })
+                ->orderBy('clients.starting_date', 'ASC')
+                ->paginate($request->itemsPerPage ?? 10);
+
+            return $this->sendResponse($data, 'Booked Clients retrieved successfully.');
+        } catch (\Exception $e) {
+            return $this->sendError('Something went wrong!', $e->getMessage());
+        }
     }
 }
